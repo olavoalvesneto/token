@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 contract Token {
     string public name;
     string public symbol;
+    uint256 public decimals;
     uint256 public totalSupply;
 
     event Transfer(address from, address to, uint256 amount);
@@ -23,7 +24,6 @@ contract Token {
         balances[msg.sender] -= _value;
         balances[_to] += _value;
 
-        //O QUE E CHAMADA DO TIPO SOCKET
         emit Transfer(msg.sender, _to, _value);
         return true;
     }
@@ -35,7 +35,6 @@ contract Token {
         balances[_to] += _value;
 
         emit Transfer(_from, _to, _value);
-
     }
 
     function approve(address _spender, uint256 _value) public {
@@ -45,5 +44,14 @@ contract Token {
 
     function allowance(address _owner, address _spender) public view returns (uint256) {
         return allowances[_owner][_spender];
+    }
+
+    constructor() {
+        name = "Nearx ERC 20 class";
+        symbol = "OLVX";
+        decimals = 18;
+
+        totalSupply = 10000 * 10e18;
+        balances[msg.sender] = totalSupply;
     }
 }
